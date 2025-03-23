@@ -6,7 +6,7 @@ const Categories: React.FC = () => {
   const categories = ['Electronics', 'Furniture', 'Fashion', 'Books', 'Home Appliances','Baby Item', 'Gadgets', 'Kitchen Items'];
   const router = useRouter()
   return (
-    <div className="my-12 px-16 text-center">
+    <div className="my-12 px-8 lg:px-16 text-center">
       <h2 className="text-3xl font-bold mb-6 text-center">Browse by Category</h2>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {categories.map((category) => (

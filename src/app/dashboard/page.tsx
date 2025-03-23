@@ -105,7 +105,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-6 mx-20 text-center">
+    <div className="p-6 mx-8 lg:mx-20 text-center">
       <h2 className="text-2xl font-bold my-6">List a Product For Sell</h2>
 
       {/* Product Creation Form */}

@@ -27,7 +27,7 @@ const FeaturedProducts: React.FC = () => {
     );
   if (!Array.isArray(listings))
     return (
-      <div className="my-12 px-16">
+      <div className="my-12 px-8 lg:px-16">
         <h2 className="text-3xl font-bold mb-6 text-center">
           Featured Listings
         </h2>
@@ -38,7 +38,7 @@ const FeaturedProducts: React.FC = () => {
     ); // Check if listings is an array
 
   return (
-    <div className="my-12 px-16">
+    <div className="my-12 px-8 lg:px-16">
       <h2 className="text-3xl font-bold mb-6 text-center">Featured Listings</h2>
       {listings.length>0 ?
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">

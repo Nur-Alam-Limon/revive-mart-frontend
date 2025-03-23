@@ -106,7 +106,7 @@ const Footer: React.FC = () => {
               />
               <Button
                 variant="default"
-                className="w-full sm:w-auto py-3 sm:py-6 rounded-r-md bg-yellow-400 hover:bg-[#FFC437] focus:outline-none -ml-6"
+                className="w-full sm:w-auto py-3 sm:py-6 rounded-r-md bg-yellow-400 hover:bg-[#FFC437] focus:outline-none lg:-ml-6"
               >
                 Subscribe
               </Button>

@@ -9,18 +9,18 @@ export const UserSidebar = ({ onSelectSection }: { onSelectSection: (section: st
       { name: 'Manage Listings', path: '/listing' },
       { name: 'Sales History', path: '/sales-history' },
     ];
-  
+
     const handleNavigation = (item: { name: string; path: string }) => {
       onSelectSection(item.name);
       router.push(`/dashboard/${item.path}`);
     };
-  
+
     return (
-      <aside className="lg:w-72 w-full bg-[#272727] text-white flex lg:flex-col flex-row items-center lg:items-start justify-start lg:min-h-screen lg:border-r border-gray-700 shadow-lg">
+      <aside className="lg:w-72 w-full bg-[#272727] text-white flex lg:flex-col flex-wrap items-center lg:items-start justify-start lg:min-h-screen lg:border-r border-gray-700 shadow-lg">
         <div className="hidden lg:block text-2xl font-bold p-6 text-center border-b border-gray-700 bg-[#272727] lg:w-full">
           User Panel
         </div>
-        <ul className="flex lg:flex-col flex-row lg:space-y-4 lg:p-4 p-2 flex-grow">
+        <ul className="flex lg:flex-col flex-wrap lg:space-y-4 lg:p-4 p-2 flex-grow gap-4 sm:gap-4 md:gap-6 lg:gap-6">
           {menuItems.map((item, index) => (
             <li key={index} className="group w-full">
               <div
@@ -35,4 +35,4 @@ export const UserSidebar = ({ onSelectSection }: { onSelectSection: (section: st
         </ul>
       </aside>
     );
-  };
+};

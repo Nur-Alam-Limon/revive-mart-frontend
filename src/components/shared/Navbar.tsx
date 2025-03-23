@@ -9,6 +9,7 @@ import {
   FaSearch,
   FaBars,
   FaHeart,
+  FaTimes
 } from "react-icons/fa";
 import { logout } from "@/redux/features/auth/authSlice";
 import { Button } from "../ui/button";
@@ -60,7 +61,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-[#272727] text-white py-6 px-16 flex justify-between items-center shadow-md sticky top-0 z-50">
+    <nav className="bg-[#272727] text-white py-6 px-8 lg:px-16 flex justify-between items-center shadow-md sticky top-0 z-50">
       {/* Logo */}
       <Link href="/">
         <div className="flex items-center justify-center">
@@ -78,14 +79,18 @@ const Navbar: React.FC = () => {
       {/* Hamburger Icon for Mobile */}
       <div className="lg:hidden flex items-center">
         <button
-          className="text-white"
+          className="text-white text-3xl"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          <FaBars />
+          {isMobileMenuOpen ? (
+            <FaTimes/> // Cross icon when the menu is open
+          ) : (
+            <FaBars className="text-2xl" /> // Hamburger icon when the menu is closed
+          )}
         </button>
       </div>
 
-      {/* Search Bar */}
+      {/* Search Bar - Hidden on Mobile */}
       <div className="pl-28 hidden lg:block flex-grow items-center justify-center mx-20">
         <div className="relative">
           <input
@@ -100,8 +105,64 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Navigation Links */}
-      <div className="space-x-6 flex items-center">
+      {/* Mobile Menu - Displayed when isMobileMenuOpen is true */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden absolute top-0 left-0 right-0 bg-[#272727] py-16 px-8 z-40">
+          <div className="absolute right-10 top-10 text-2xl" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <FaTimes/>
+          </div>
+          <div className="space-y-8">
+            <Link href="/products" className="block hover:text-[#FFD447] transition">
+              Products
+            </Link>
+
+            {token || session?.user ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="block hover:text-[#FFD447] transition flex items-center"
+                >
+                  <FaUserCircle className="mr-1" /> Dashboard
+                </Link>
+                <Button
+                  className="py-2 px-4 bg-red-500 text-white rounded-md"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="block hover:text-[#FFD447] transition">
+                  Login
+                </Link>
+                <Link href="/register" className="block hover:text-[#FFD447] transition">
+                  Register
+                </Link>
+              </>
+            )}
+
+            {/* Wishlist Text */}
+            <Link
+              href="/wishlist"
+              className="block hover:text-[#FFD447] transition"
+            >
+              Wishlist
+            </Link>
+
+            {/* Cart Text */}
+            <Link
+              href="/cart"
+              className="block hover:text-[#FFD447] transition"
+            >
+              Cart
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Navigation Links - Visible on larger screens */}
+      <div className="space-x-6 flex items-center hidden lg:flex">
         <Link href="/products" className="hover:text-[#FFD447] transition">
           Products
         </Link>
@@ -133,35 +194,35 @@ const Navbar: React.FC = () => {
         )}
 
         <div className="flex items-center mr-2">
-          {/* Wishlist */}
-        <Button
-          variant="ghost"
-          size="default"
-          className="relative text-gray-200 flex items-center"
-          onClick={() => router.push("/wishlist")}
-        >
-          <FaHeart className="cursor-pointer text-xl" />
-          {wishlistItemCount > 0 && (
-            <span className="absolute top-0 right-0 text-xs text-white bg-red-500 rounded-full w-4 h-4 flex items-center justify-center">
-              {wishlistItemCount}
-            </span>
-          )}
-        </Button>
+          {/* Wishlist Icon - Hidden on Mobile */}
+          <Button
+            variant="ghost"
+            size="default"
+            className="relative text-gray-200 flex items-center hidden lg:block"
+            onClick={() => router.push("/wishlist")}
+          >
+            <FaHeart className="cursor-pointer text-xl" />
+            {wishlistItemCount > 0 && (
+              <span className="absolute top-0 right-0 text-xs text-white bg-red-500 rounded-full w-4 h-4 flex items-center justify-center">
+                {wishlistItemCount}
+              </span>
+            )}
+          </Button>
 
-        {/* Shopping Cart */}
-        <Button
-          variant="ghost"
-          size="default"
-          className="relative text-gray-200 flex items-center"
-          onClick={() => router.push("/cart")}
-        >
-          <FaShoppingCart className=" cursor-pointer text-xl" />
-          {cartItemCount > 0 && (
-            <span className="absolute top-0 right-0 text-xs text-white bg-yellow-500 rounded-full w-4 h-4 flex items-center justify-center">
-              {cartItemCount}
-            </span>
-          )}
-        </Button>
+          {/* Shopping Cart Icon - Hidden on Mobile */}
+          <Button
+            variant="ghost"
+            size="default"
+            className="relative text-gray-200 flex items-center hidden lg:block"
+            onClick={() => router.push("/cart")}
+          >
+            <FaShoppingCart className="cursor-pointer text-xl" />
+            {cartItemCount > 0 && (
+              <span className="absolute top-0 right-0 text-xs text-white bg-yellow-500 rounded-full w-4 h-4 flex items-center justify-center">
+                {cartItemCount}
+              </span>
+            )}
+          </Button>
         </div>
       </div>
     </nav>
