@@ -8,9 +8,10 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Heart } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cart/cartSlice";
+import { addToWishlist } from "@/redux/features/wishlist/wishlistSlice"; // Import addToWishlist action
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +21,7 @@ interface ProductCardProps {
   image: string;
   description: string;
   condition: string;
-  listing: any
+  listing: any;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -29,16 +30,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
   image,
   description,
   condition,
-  listing
+  listing,
 }) => {
   const dispatch = useDispatch();
   const router = useRouter()
   const handleAddToCart = () => {
-    
-    dispatch(addToCart(listing)); // Dispatch addToCart action
-    toast.success("Product Added to Cart", {
-      duration: 3000,
-    });
+    dispatch(addToCart(listing));
+    toast.success("Product Added to Cart", { duration: 3000 });
+  };
+
+  const handleAddToWishlist = () => {
+    dispatch(addToWishlist(listing));
+    toast.success("Product Added to Wishlist", { duration: 3000 });
   };
   return (
     <Card onClick={()=>router.push(`/product-details/${listing._id}`)} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-4 cursor-pointer">
@@ -65,9 +68,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <CardContent className="space-y-2">
         <p className="text-yellow-500 font-semibold">Price: {price}</p>
         <p className="text-gray-600">Condition: {condition}</p>
-        <Button onClick={handleAddToCart} className="mt-4 w-full flex items-center justify-center gap-2 cursor-pointer">
-          <ShoppingCart size={18} /> Add to Cart
-        </Button>
+        <div className="flex flex-col gap-2 mt-4">
+          {listing.status=='available' ? <Button onClick={handleAddToCart} className="w-full flex items-center justify-center gap-2 cursor-pointer">
+            <ShoppingCart size={18} /> Add to Cart
+          </Button>: <Button disabled className="w-full flex items-center justify-center gap-2 cursor-pointer">
+            <ShoppingCart size={18} /> Already Sold
+          </Button>}
+          <Button onClick={handleAddToWishlist} variant="outline" className="w-full flex items-center justify-center gap-2 cursor-pointer">
+            <Heart size={18} /> Add to Wishlist
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

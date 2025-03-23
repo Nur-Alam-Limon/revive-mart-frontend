@@ -8,6 +8,7 @@ import { FeaturesSection } from '@/components/home/WhyChooseUs';
 const Home: React.FC = () => {
   return (
     <div>
+      
       <Banner />
       <Categories />
       <FeaturedProducts />

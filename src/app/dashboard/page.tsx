@@ -106,7 +106,7 @@ const Dashboard = () => {
 
   return (
     <div className="p-6 mx-20 text-center">
-      <h2 className="text-2xl font-bold my-6">Sell a Product</h2>
+      <h2 className="text-2xl font-bold my-6">List a Product For Sell</h2>
 
       {/* Product Creation Form */}
       <form onSubmit={handleSubmit} className="space-y-6 mb-8">

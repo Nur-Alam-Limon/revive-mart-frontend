@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { AppDispatch } from '@/redux/store';
 import Image from 'next/image';
 import { register } from '@/redux/features/auth/authSlice';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,7 +28,10 @@ const Register = () => {
     try {
       // Dispatch the register action with the payload including name, email, and password
       await dispatch(register({ name, email, password }));
-      router.push('/dashboard');
+      router.push('/login');
+      toast.success("User Registered Successfully", {
+        duration: 3000,
+      });
     } catch (err) {
       console.error("Registration failed:", err);
     }

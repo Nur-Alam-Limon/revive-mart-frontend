@@ -3,20 +3,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { FaTrashAlt } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { RootState } from "@/redux/store";
+import { AppDispatch, RootState } from "@/redux/store";
 import { removeFromCart } from "@/redux/features/cart/cartSlice";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 const CartPage = () => {
-  const dispatch = useDispatch();
+  
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const cartTotal = cartItems.reduce(
     (total, item) => total + item.price * (item.cartQuantity ?? 1), // Default to 1 if cartQuantity is undefined
     0
   );
 
+
   const token = useSelector((state: RootState) => state.auth.token);
   const user = useSelector((state: RootState) => state.auth.user);
+  const { data: session, status } = useSession();
+  const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+      if (status === "loading") return;
+      if (!user && !session) {
+        router.push("/login");
+      }
+    }, [user, dispatch, router, session, status]);
 
   const handleRemoveItem = (itemId: string) => {
     // Dispatch the action to remove the item from the cart (assuming you have this action)
@@ -30,8 +43,8 @@ const CartPage = () => {
     try {
       // Extract item IDs from cart items
       const itemIDs = cartItems.map((item) => item._id);
-  
-      const response = await fetch(`http://localhost:3000/api/orders/initiate-payment`, {
+      let tranId= `TRX-${Date.now()}`;
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/initiate-payment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,10 +53,10 @@ const CartPage = () => {
         body: JSON.stringify({
           total_amount: cartTotal,
           currency: "BDT",
-          tran_id: `TRX-${Date.now()}`,
-          success_url: `http://localhost:3000/api/orders/ssl/success`,
-          fail_url: `http://localhost:3000/api/orders/ssl/fail`,
-          cancel_url: `http://localhost:3000/api/orders/ssl/cancel`,
+          tran_id: `${tranId}`,
+          success_url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/ssl/success/${tranId}`,
+          fail_url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/ssl/fail`,
+          cancel_url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders/ssl/cancel`,
           customer: {
             name: user?.name,
             email: user?.email,
@@ -101,7 +114,7 @@ const CartPage = () => {
                     <h3 className="text-2xl font-semibold text-gray-800 py-2">
                       {item.title}
                     </h3>
-                    <p className="text-lg text-gray-500 py-1">
+                    <p className="text-lg text-gray-500 py-1 pr-6">
                       Description: {item.description || "N/A"}
                     </p>
                     <p className="text-lg text-gray-500 py-1">
@@ -115,7 +128,7 @@ const CartPage = () => {
                 <div className="flex flex-col md:flex-row justify-between items-center w-full md:w-auto mt-4 md:mt-0">
                   <div className="flex flex-row justify-between items-center w-full">
                     <span className="text-gray-700 text-2xl font-semibold">
-                      $ {item.price * (item.cartQuantity ?? 1)}{" "}
+                      ${item.price * (item.cartQuantity ?? 1)}{" "}
                       {/* Display cartQuantity */}
                     </span>
                     <button

@@ -13,13 +13,26 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const ManageUsers = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { users } = useSelector((state: RootState) => state.auth);
 
+  const user = useSelector((state: RootState) => state.auth.user);
+    const { data: session, status } = useSession();
+    const router = useRouter();
+  
+    useEffect(() => {
+        if (status === "loading") return;
+        if (!user && !session) {
+          router.push("/login");
+        }
+      }, [user, dispatch, router, session, status]);
+
   useEffect(() => {
-    dispatch(fetchUsers());
+    if(user || session) dispatch(fetchUsers());
   }, [dispatch]);
 
   const handleDeleteUser = async (userId: string) => {

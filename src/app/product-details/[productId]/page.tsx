@@ -1,20 +1,24 @@
-"use client"
+"use client";
 import React, { use, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { fetchListings } from "@/redux/features/listing/listingSlice";
 import { RootState } from "@/redux/store";
 import { addToCart } from "@/redux/features/cart/cartSlice";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart } from "lucide-react";
 
 interface ProductDetailsProps {
-    params: Promise<{ productId: string }>;
+  params: Promise<{ productId: string }>;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ params }) => {
-    const { productId } = use(params);
+  const { productId } = use(params);
   const dispatch = useDispatch();
 
-  const { listings, loading, error } = useSelector((state: RootState) => state.listings);
+  const { listings, loading, error } = useSelector(
+    (state: RootState) => state.listings
+  );
 
   useEffect(() => {
     if (listings.length === 0) {
@@ -86,7 +90,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ params }) => {
                 {product.description}
               </p>
               <p className="text-lg text-gray-600 mb-2">
-                <span className="font-semibold">Condition:</span> {product.condition}
+                <span className="font-semibold">Condition:</span>{" "}
+                {product.condition}
               </p>
               <p className="text-lg text-gray-600 mb-2">
                 <span className="font-semibold">Status:</span> {product.status}
@@ -95,12 +100,21 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ params }) => {
 
             {/* Call to Action */}
             <div className="flex gap-4">
-              <button 
-                className="cursor-pointer bg-yellow-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-yellow-600 transition-all w-full md:w-auto"
-                onClick={handleAddToCart}
-              >
-                Add to Cart
-              </button>
+              {product.status == "available" ? (
+                <Button
+                  onClick={handleAddToCart}
+                  className="w-full flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <ShoppingCart size={18} /> Add to Cart
+                </Button>
+              ) : (
+                <Button
+                  disabled
+                  className="md:w-auto flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <ShoppingCart size={18} /> Already Sold
+                </Button>
+              )}
             </div>
           </div>
         </div>

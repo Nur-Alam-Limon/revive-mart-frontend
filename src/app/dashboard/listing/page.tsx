@@ -26,10 +26,12 @@ import {
 import { AppDispatch, RootState } from "@/redux/store";
 import { useSession } from "next-auth/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const ManageListings = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [listings, setListings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,6 +50,14 @@ const ManageListings = () => {
     inStock: false,
   });
   const [editingProduct, setEditingProduct] = useState<any>(null);
+  const router = useRouter();
+  
+    useEffect(() => {
+        if (status === "loading") return;
+        if (!user && !session) {
+          router.push("/login");
+        }
+      }, [user, dispatch, router, session, status]);
 
   // Fetch listings when the component mounts or email changes
   useEffect(() => {
@@ -122,6 +132,10 @@ const ManageListings = () => {
         token: session?.accessToken,
       })
     );
+
+    toast.success("Listing Deleted Successfully", {
+      duration: 3000,
+    });
   
 
       // Remove the deleted listing from the state
@@ -147,6 +161,9 @@ const ManageListings = () => {
             listing._id === editingProduct._id ? { ...listing, ...formData } : listing
           )
         );
+        toast.success("Listing Updated Successfully", {
+          duration: 3000,
+        });
       });
     }
     closeModal();

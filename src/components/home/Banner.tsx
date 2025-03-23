@@ -4,13 +4,13 @@ import Link from 'next/link';
 
 const Banner: React.FC = () => {
   return (
-    <div className="w-full h-[500px] relative mb-8">
+    <div className="w-full h-[550px] relative mb-8">
       {/* Background Image */}
       <Image
-        src="https://img.freepik.com/free-vector/memphis-style-black-friday-wide-yellow-banner-design_1017-34720.jpg?t=st=1742504870~exp=1742508470~hmac=d9fe042d2e073ce4a35023c0ce89f7f5aa3278398d613d58b0800ed921fe1b66&w=1800"
+        src="/banner.png"
         alt="Banner Background"
         fill
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "fill" }}
         priority={true}
       />
 

@@ -5,6 +5,7 @@ import authReducer from './features/auth/authSlice';
 import listingsReducer from './features/listing/listingSlice';
 import transactionsReducer from './features/order/orderSlice';
 import cartReducer from './features/cart/cartSlice'
+import wishlistReducer from './features/wishlist/wishlistSlice'
 
 const persistConfig = {
   key: 'auth',
@@ -26,7 +27,8 @@ export const store = configureStore({
     auth: persistedReducer,
     listings: listingsReducer,
     transactions: transactionsReducer,
-    cart: persistedCartReducer
+    cart: persistedCartReducer,
+    wishlist: wishlistReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

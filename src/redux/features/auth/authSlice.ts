@@ -27,7 +27,7 @@ interface AuthState {
   users: User[];
 }
 
-const API_URL = 'http://localhost:3000/api/auth';
+const API_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth`;
 
 // Async actions
 export const register = createAsyncThunk(

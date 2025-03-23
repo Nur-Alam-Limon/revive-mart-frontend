@@ -7,6 +7,7 @@ import Image from "next/image";
 import { login} from "@/redux/features/auth/authSlice";
 import { signIn } from "next-auth/react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,18 +25,27 @@ const Login = () => {
     e.preventDefault();
 
     // Dispatch loginUser action with email and password
-    await dispatch(login({ email, password }));
+    const result = await dispatch(login({ email, password }));
+    console.log('result', result)
     router.push("/dashboard");
+    if(result?.payload?.success) toast.success("User Logged In Successfully", {
+      duration: 3000,
+    });
+    else {
+      toast.error(result.payload, {
+        duration: 3000,
+      });
+    }
   };
 
   // Handle Google login
   const handleGoogleLogin = () => {
-    signIn("google", { callbackUrl: "http://localhost:3001/dashboard" });
+    signIn("google", { callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/dashboard` });
   };
 
   // Handle GitHub login
   const handleGitHubLogin = () => {
-    signIn("github", { callbackUrl: "http://localhost:3001/dashboard" });
+    signIn("github", { callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/dashboard` });
   };
 
   return (

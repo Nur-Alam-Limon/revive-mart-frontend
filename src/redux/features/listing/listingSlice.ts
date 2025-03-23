@@ -21,7 +21,7 @@ interface ListingsState {
   searchQuery: string; // Add search query state
 }
 
-const API_URL = 'http://localhost:3000/api/listings';
+const API_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/listings`;
 
 // Async actions
 export const fetchListings = createAsyncThunk<{ listings: Listing[]; success: boolean }>(
@@ -61,11 +61,13 @@ export const createListing = createAsyncThunk<
   'listings/createListing',
   async ({ listingData, token }, { rejectWithValue, getState }) => {
     try {
+      console.log('tpoken', token);
       // Get token from state if not provided via props
       const state = (getState() as { auth: { token: string | null } }).auth;
       const userToken = state.token;
 
       const usedToken = token || userToken;
+      console.log('tpokenasda', usedToken);
 
       if (!usedToken) {
         throw new Error("User token is not available for API request");

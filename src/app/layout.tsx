@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import Providers from "@/components/shared/Providers";
 import Footer from "@/components/shared/Footer";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,41 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
         <Providers>
-            <Navbar />
-            {children}
-            <Footer/>
+          <Toaster
+            position="bottom-center"
+            toastOptions={{
+              style: {
+                borderRadius: "8px",
+                padding: "14px",
+                fontSize: "16px",
+              },
+              success: {
+                style: {
+                  background: "#272727", // Purple background
+                  color: "#fff",
+                  border: "1px solid #272727", // Darker purple border
+                },
+                iconTheme: {
+                  primary: "#272727",
+                  secondary: "#fff",
+                },
+              },
+              error: {
+                style: {
+                  background: "red", // Red background
+                  color: "#fff",
+                  border: "1px solid rgb(255, 0, 0)", // Darker red border
+                },
+                iconTheme: {
+                  primary: "#272727",
+                  secondary: "#fff",
+                },
+              },
+            }}
+          />
+          <Navbar />
+          {children}
+          <Footer />
         </Providers>
       </body>
     </html>

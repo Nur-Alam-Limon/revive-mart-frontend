@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "./ProductCard";
 import { fetchListings } from "@/redux/features/listing/listingSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import Loading from "@/app/loading";
+import Error from "@/app/error";
 
 const SpecialOffers: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -17,21 +19,11 @@ const SpecialOffers: React.FC = () => {
 
   if (loading)
     return (
-      <div className="my-12 px-16">
-        <h2 className="text-3xl font-bold mb-6 text-center">Special Offers</h2>
-        <div className="text-center py-4 text-xl">
-          <div>Loading...</div>
-        </div>
-      </div>
+      <Loading/>
     );
   if (error)
     return (
-      <div className="my-12 px-16">
-        <h2 className="text-3xl font-bold mb-6 text-center">Special Offers</h2>
-        <div className="text-center py-4 text-xl">
-          <div>Error: {error}</div>
-        </div>
-      </div>
+      <Error/>
     );
   if (!Array.isArray(listings))
     return (

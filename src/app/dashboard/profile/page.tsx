@@ -9,12 +9,20 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { fetchUsers, updateProfile } from "@/redux/features/auth/authSlice";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/loading";
 
 const UserProfilePage = () => {
   const { data: session, status } = useSession();
   const dispatch: AppDispatch = useDispatch();
   const { user, users, token } = useSelector((state: RootState) => state.auth);
   const router = useRouter()
+
+  useEffect(() => {
+      if (status === "loading") return;
+      if (!user && !session) {
+        router.push("/login");
+      }
+    }, [user, dispatch, router, session, status]);
 
   const [profile, setProfile] = useState({
     name: "",
@@ -86,13 +94,16 @@ const UserProfilePage = () => {
       };
 
       const response = await dispatch(updateProfile({userData:updatedProfile, token}));
-      toast.success("Profile updated successfully!");
+      
+      toast.success("Profile updated successfully!", {
+        duration:3000
+      });
     } catch (error) {
       toast.error("Failed to update profile. Please try again.");
     }
   };
 
-  if (!user && !session) return <div>Loading...</div>;
+  if (!user && !session) return <Loading/>;
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen py-12">
@@ -103,7 +114,7 @@ const UserProfilePage = () => {
         <CardContent className="p-6 bg-white rounded-b-2xl space-y-10">
           <div className="flex flex-col items-center">
             <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-yellow-300">
-              <img src={preview || ""} alt="Profile" className="w-full h-full object-cover" />
+              <img src={preview || "https://ps.w.org/kama-thumbnail/assets/icon-256x256.png?rev=2836004"} alt="Profile" className="w-full h-full object-cover" />
             </div>
             <label
               htmlFor="profilePicUpload"

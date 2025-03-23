@@ -22,7 +22,7 @@ const initialState: OrderState = {
   error: null,
 };
 
-const API_URL = 'http://localhost:3000/api/orders';
+const API_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/orders`;
 
 // Async actions
 export const fetchAllTransactions = createAsyncThunk<

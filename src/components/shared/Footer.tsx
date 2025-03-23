@@ -15,7 +15,14 @@ const Footer: React.FC = () => {
         {/* Logo and Social Media Section */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-700 py-6">
           <div className="text-2xl font-extrabold tracking-widest text-[#FFD447] mb-4 sm:mb-0">
-            Revive Mart
+          <div className="flex items-center">
+          <img
+          src="/revive-mart.png"
+          alt="logo"
+          className="rounded-sm h-12 w-auto mr-2"
+        />
+            <span className="mt-2">Revive Mart</span>
+          </div>
           </div>
           <div className="flex space-x-6 justify-center sm:justify-end">
             <a
