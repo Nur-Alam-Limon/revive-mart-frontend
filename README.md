@@ -35,7 +35,14 @@ npm install
 3. **Set Up Environment Variables**:
 Create a `.env` file in the root directory and add:
 ```env
-REACT_APP_BACKEND_URL=http://localhost:3000  # URL of your backend server
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+NEXT_PUBLIC_NEXTAUTH_URL=
+NEXT_PUBLIC_BACKEND_URL=
 ```
 
 4. **Run Development Server**:
