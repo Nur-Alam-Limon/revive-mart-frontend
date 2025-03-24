@@ -1,12 +1,8 @@
-Here's a **Frontend README.md** based on your backend description:
-
----
-
-# **SecondHand 🛒 (Frontend for Marketplace Web Application)**
+# **Revive Mart 🛒 - (SecondHand Marketplace Web Application)**
 
 This is the frontend of the **SecondHand Marketplace Web Application**, where users can buy and sell used items. It is built using **React**, **Redux**, **TypeScript**, and **Tailwind CSS** for a responsive and modern UI. Users can browse listings, create new listings, view their dashboard, and communicate with sellers.
 
-**Live Link** - [SecondHand Marketplace](https://secondhand-marketplace-frontend.vercel.app/)
+**Live Link** - https://revive-mart-brown.vercel.app
 
 ---
 
@@ -18,10 +14,8 @@ This is the frontend of the **SecondHand Marketplace Web Application**, where us
 - **Listings Management**: Create, update, delete, and view listings.
 - **Search & Filters**: Search items by categories, price, and condition.
 - **Responsive Design**: Optimized for mobile and desktop screens using Tailwind CSS.
-- **Dark Mode Support**: Toggle between light and dark modes.
 - **State Management**: Handled with Redux Toolkit for efficient global state management.
 - **Modals for CRUD Operations**: Forms for adding and editing listings appear as modals for better user experience.
-- **Messaging System (Optional)**: Communicate directly with sellers or buyers.
 
 ---
 
@@ -64,20 +58,87 @@ npm run preview
 ## Project Structure
 
 ```
-/src
-│
-├── /assets          # Static assets (images, logos, etc.)
-├── /components      # Reusable React components
-├── /features        # Redux slices for state management
-├── /hooks           # Custom hooks
-├── /pages           # Main pages (Home, Dashboard, ListingDetails, etc.)
-├── /routes          # Application routing
-├── /services        # API calls and request handling
-├── /styles          # Global styles and Tailwind configuration
-├── /utils           # Utility functions
-├── App.tsx          # Main application file
-├── index.tsx        # Entry point for rendering
-└── types.ts         # TypeScript type definitions
+📦src
+ ┣ 📂app
+ ┃ ┣ 📂api
+ ┃ ┃ ┗ 📂auth
+ ┃ ┃ ┃ ┗ 📂[...nextauth]
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┣ 📂cart
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂dashboard
+ ┃ ┃ ┣ 📂listing
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂profile
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂purchase-history
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂sales-history
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂sidebar
+ ┃ ┃ ┃ ┣ 📜AdminSidebar.tsx
+ ┃ ┃ ┃ ┗ 📜UserSidebar.tsx
+ ┃ ┃ ┣ 📂users
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📜layout.tsx
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂login
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂product-details
+ ┃ ┃ ┗ 📂[productId]
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂products
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂register
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂wishlist
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📜error.tsx
+ ┃ ┣ 📜favicon.ico
+ ┃ ┣ 📜globals.css
+ ┃ ┣ 📜layout.tsx
+ ┃ ┣ 📜loading.tsx
+ ┃ ┣ 📜not-found.tsx
+ ┃ ┗ 📜page.tsx
+ ┣ 📂components
+ ┃ ┣ 📂home
+ ┃ ┃ ┣ 📜Banner.tsx
+ ┃ ┃ ┣ 📜Categories.tsx
+ ┃ ┃ ┣ 📜FeaturedProducts.tsx
+ ┃ ┃ ┣ 📜ProductCard.tsx
+ ┃ ┃ ┣ 📜SpecialOffers.tsx
+ ┃ ┃ ┗ 📜WhyChooseUs.tsx
+ ┃ ┣ 📂shared
+ ┃ ┃ ┣ 📜Footer.tsx
+ ┃ ┃ ┣ 📜Navbar.tsx
+ ┃ ┃ ┗ 📜Providers.tsx
+ ┃ ┗ 📂ui
+ ┃ ┃ ┣ 📜button.tsx
+ ┃ ┃ ┣ 📜card.tsx
+ ┃ ┃ ┣ 📜dialog.tsx
+ ┃ ┃ ┣ 📜input.tsx
+ ┃ ┃ ┣ 📜label.tsx
+ ┃ ┃ ┗ 📜table.tsx
+ ┣ 📂lib
+ ┃ ┗ 📜utils.ts
+ ┣ 📂redux
+ ┃ ┣ 📂features
+ ┃ ┃ ┣ 📂auth
+ ┃ ┃ ┃ ┗ 📜authSlice.ts
+ ┃ ┃ ┣ 📂cart
+ ┃ ┃ ┃ ┗ 📜cartSlice.ts
+ ┃ ┃ ┣ 📂listing
+ ┃ ┃ ┃ ┗ 📜listingSlice.ts
+ ┃ ┃ ┣ 📂order
+ ┃ ┃ ┃ ┗ 📜orderSlice.ts
+ ┃ ┃ ┗ 📂wishlist
+ ┃ ┃ ┃ ┗ 📜wishlistSlice.ts
+ ┃ ┗ 📜store.ts
+ ┣ 📂types
+ ┃ ┗ 📜next-auth.d.ts
+ ┗ 📂utils
+ ┃ ┣ 📜authOptions.ts
+ ┃ ┗ 📜axiosInstance.ts
 ```
 
 ---
@@ -104,13 +165,13 @@ const fetchListings = async () => {
 
 ## Tech Stack
 
-- **Frontend Framework**: React (with TypeScript)
+- **Frontend Framework**: Nextjs (with TypeScript)
 - **State Management**: Redux Toolkit
-- **Styling**: Tailwind CSS
-- **Routing**: React Router
+- **Styling**: Tailwind CSS, Shadcn UI
+- **Routing**: Next Router
 - **Authentication**: JWT (via backend)
 - **API Requests**: Axios
-- **Build Tool**: Vite (for fast development and optimized builds)
+- **Auth**: NextAuth
 
 ---
 
@@ -131,16 +192,9 @@ npm run build
 npm run preview
 ```
 
-- **Lint Code**:
-```bash
-npm run lint
-```
-
----
-
 ## Future Improvements
 
-- Improve messaging system for real-time communication.
+- Implement messaging system for real-time communication.
 - Implement wishlist and review systems.
 - Enhance accessibility and SEO.
 - Optimize performance for large data handling.
@@ -150,7 +204,3 @@ npm run lint
 ## Author
 
 [Nur Alam Chowdhury](https://github.com/Nur-Alam-Limon)
-
----
-
-Would you like me to show you how to **connect your frontend to your backend using Redux for authentication, fetching listings, and handling CRUD operations**? 😊

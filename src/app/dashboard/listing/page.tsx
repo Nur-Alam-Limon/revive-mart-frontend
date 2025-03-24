@@ -22,6 +22,7 @@ import {
   deleteListing,
   updateListing,
   fetchListingsUser,
+  fetchListings,
 } from "@/redux/features/listing/listingSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import { useSession } from "next-auth/react";
@@ -66,7 +67,7 @@ const ManageListings = () => {
       const email = user?.email || session?.user?.email;
       if (email) {
         try {
-          const response = await dispatch(fetchListingsUser(email));
+          const response = user?.role=='admin' ? await dispatch(fetchListings()) :  await dispatch(fetchListingsUser(email));
           console.log("response", response);
           // After fetching, set the listings data
           setListings(
